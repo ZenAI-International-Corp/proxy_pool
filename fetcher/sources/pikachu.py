@@ -33,7 +33,9 @@ class PikachuFetcher(BaseFetcher):
             if not isinstance(data, dict):
                 return
             for item in data.get("data", []):
-                protocol = item.get("protocol", "").lower()
+                if not isinstance(item, dict):
+                    continue
+                protocol = (item.get("protocol") or "").lower()
                 if "socks" in protocol:
                     continue
                 ip = item.get("ip")
